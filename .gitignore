@@ -28,11 +28,14 @@ env/
 # Jupyter
 # ------------------------
 .ipynb_checkpoints/
-.notebooks/
+
 
 # ------------------------
 # Data
 # ------------------------
+# Ignore all subdirectories inside DataProcessing/
+DataProcessing/*/
+
 data/*
 !data/.gitkeep
 
