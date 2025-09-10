@@ -47,7 +47,7 @@ Quick checklist:
 
 Step 4 will set up its own environment, which can take a few minutes on the first run. For subsequent calls it will be faster then.
 
-Now when commits are made, the hook will run before and clean the notebooks if necessary. If it removes the output of a notebook, the file is changed and the commit itself aborts. You need to run it again and, if the notebook is clean, it will pass.
+Now when commits are made, the hook will run before and clean the notebooks if necessary. If it removes the output of a notebook, the file is changed and the commit itself aborts. You need to stage the changed files again, as well as the commit. If the newly staged notebook is clean, it will pass.
 
 Possible workflows:
 - Inside Jupyter-lab, run `Edit\Clear Outputs of All Cells`
@@ -57,11 +57,13 @@ or
 
 - stage notebooks
 - run `pre-commit run --all-files`
+- stage again
 - commit, once all output is removed
 
 or
 - stage and commit (fails, because output is removed)
-- commit again, once all output is removed
+- stage again
+- commit, once all output is removed
 
 Notes:
 
