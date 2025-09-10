@@ -1,0 +1,223 @@
+&HEAD CHID='Isothermal_300C',
+    TITLE='Simplified TGA simulation setup, to assess the reaction profile'  /
+
+0.53173615527165475 cm cells
+&MESH ID  = 'Mesh',
+      IJK = 5, 5, 5
+      XB  = -0.013293403881791368,0.013293403881791368, -0.013293403881791368,0.013293403881791368, -0.015952084658149644,0.010634723105433095 /
+
+
+&TIME T_END          = 28831.0,
+      DT             = 0.2,
+      WALL_INCREMENT = 1 /
+
+&MISC TMPA=121.96099999999996, SOLID_PHASE_ONLY=F /
+
+
+# RAMP for TGA with 300 °C isothermal program, from experiment.
+&RAMP ID = 'T_RAMP', T = 0.0, F = 0.0 /
+&RAMP ID = 'T_RAMP', T = 6.0, F = 0.013337558121541377 /
+&RAMP ID = 'T_RAMP', T = 17.0, F = 0.09781551430655784 /
+&RAMP ID = 'T_RAMP', T = 33.0, F = 0.2877670274930549 /
+&RAMP ID = 'T_RAMP', T = 51.0, F = 0.47600529081034876 /
+&RAMP ID = 'T_RAMP', T = 72.0, F = 0.6129750123427677 /
+&RAMP ID = 'T_RAMP', T = 91.0, F = 0.6993762296712772 /
+&RAMP ID = 'T_RAMP', T = 109.0, F = 0.7617422093186057 /
+&RAMP ID = 'T_RAMP', T = 127.0, F = 0.8110119595894095 /
+&RAMP ID = 'T_RAMP', T = 145.0, F = 0.8504351286226943 /
+&RAMP ID = 'T_RAMP', T = 163.0, F = 0.882524482893292 /
+&RAMP ID = 'T_RAMP', T = 181.0, F = 0.9076742540915351 /
+&RAMP ID = 'T_RAMP', T = 199.0, F = 0.9273176770542417 /
+&RAMP ID = 'T_RAMP', T = 218.0, F = 0.9440688394850667 /
+&RAMP ID = 'T_RAMP', T = 236.0, F = 0.9561242235109466 /
+&RAMP ID = 'T_RAMP', T = 254.0, F = 0.9658142173948281 /
+&RAMP ID = 'T_RAMP', T = 275.0, F = 0.9743915199658084 /
+&RAMP ID = 'T_RAMP', T = 295.0, F = 0.9807692307692304 /
+&RAMP ID = 'T_RAMP', T = 314.0, F = 0.9853010530038974 /
+&RAMP ID = 'T_RAMP', T = 331.0, F = 0.9885801764094705 /
+&RAMP ID = 'T_RAMP', T = 351.0, F = 0.9916750793989991 /
+&RAMP ID = 'T_RAMP', T = 371.0, F = 0.9939538859454558 /
+&RAMP ID = 'T_RAMP', T = 383.0, F = 0.9951163167706895 /
+&RAMP ID = 'T_RAMP', T = 392.0, F = 0.9958200387599753 /
+&RAMP ID = 'T_RAMP', T = 402.0, F = 0.996510865320138 /
+&RAMP ID = 'T_RAMP', T = 413.0, F = 0.9971777432262152 /
+&RAMP ID = 'T_RAMP', T = 431.0, F = 0.9980933186939508 /
+&RAMP ID = 'T_RAMP', T = 450.0, F = 0.9987307213334613 /
+&RAMP ID = 'T_RAMP', T = 453.0, F = 0.9988209893373221 /
+&RAMP ID = 'T_RAMP', T = 470.0, F = 0.9992981202148743 /
+&RAMP ID = 'T_RAMP', T = 489.0, F = 0.9997126161509722 /
+&RAMP ID = 'T_RAMP', T = 526.0, F = 1.0002431709491773 /
+&RAMP ID = 'T_RAMP', T = 533.0, F = 1.0003168591155944 /
+&RAMP ID = 'T_RAMP', T = 551.0, F = 1.0005047639399587 /
+&RAMP ID = 'T_RAMP', T = 565.0, F = 1.0006005585563014 /
+&RAMP ID = 'T_RAMP', T = 595.0, F = 1.0007718835432213 /
+&RAMP ID = 'T_RAMP', T = 650.0, F = 1.0009082066510935 /
+&RAMP ID = 'T_RAMP', T = 27691.0, F = 0.9999852623667167 /
+&RAMP ID = 'T_RAMP', T = 28831.0, F = 1.0 /
+
+
+
+&RADI RADIATION = .FALSE. /
+
+&DUMP DT_DEVC = 0.5, MASS_FILE = T /
+
+
+##################
+#### Reaction ####
+##################
+
+# ---------------------------------------
+# Basic Gas Species Definitions and Reaction
+# Taken from: https://github.com/firemodels/fds/blob/5c00de797eff52542c2bfb769afedc8ef4995a28/Validation/NIST_NRC_Parallel_Panels/FDS_Input_Files/PMMA_60_kW_1_cm.fds
+# ---------------------------------------
+
+&SPEC ID        = 'MMA',
+      FORMULA   = 'C5O2H8',
+      RADCAL_ID = 'MMA',
+      RAMP_CP   = 'MMA CP' /
+
+
+https://www.chemeo.com/cid/57-301-4/Methyl-methacrylate
+&RAMP ID = 'MMA CP',
+      T  = 114,
+      F  = 1.48 /
+
+&RAMP ID = 'MMA CP',
+      T  = 300,
+      F  = 1.90 /
+
+
+&REAC FUEL               = 'MMA',
+      SOOT_YIELD         = 0.022,
+      CO_YIELD           = 0.010,
+      RADIATIVE_FRACTION = 0.35,
+      HEAT_OF_COMBUSTION = 25610 /
+
+
+
+ ***** Open Vents ********************
+
+&VENT MB='XMIN', SURF_ID='OPEN' /
+&VENT MB='XMAX', SURF_ID='OPEN' /
+&VENT MB='YMIN', SURF_ID='OPEN' /
+&VENT MB='YMAX', SURF_ID='OPEN' /
+&VENT MB='ZMIN', SURF_ID='OPEN' /
+&VENT MB='ZMAX', SURF_ID='OPEN' /
+
+
+
+***** Surfaces ********************
+
+&SURF ID        = 'ADIABATIC',
+      ADIABATIC = T /
+
+
+
+# Resolution:
+# ---------------------------------------
+
+&SURF ID                        = 'PMMA Sample',
+      COLOR                     = 'BLACK'
+      TMP_GAS_FRONT             = 302.9036666666667,
+      RAMP_TMP_GAS_FRONT        = 'T_RAMP',
+      BACKING                   = 'INSULATED',
+      THICKNESS                 = 0.000087297,
+      MINIMUM_LAYER_THICKNESS   = 0.0000001,
+      HEAT_TRANSFER_COEFFICIENT = 1000.,
+      MATL_ID                   = 'BLACK PMMA' /
+
+
+
+
+
+***** Materials ********************
+
+# ---------------------------------------
+# MaCFP PMMA Reference (UMD)
+# Taken from: https://github.com/firemodels/fds/blob/5c00de797eff52542c2bfb769afedc8ef4995a28/Validation/NIST_NRC_Parallel_Panels/FDS_Input_Files/PMMA_60_kW_1_cm.fds
+# ---------------------------------------
+
+&MATL ID                     = 'BLACK PMMA'
+      ABSORPTION_COEFFICIENT = 2870.
+      A(1)                   = 4.95E16
+      E(1)                   = 1.64E5
+      EMISSIVITY             = 0.96
+      DENSITY                = 1210.
+      SPEC_ID                = 'MMA'
+      NU_SPEC                = 0.02
+      MATL_ID                = 'PMMA_INT'
+      NU_MATL                = 0.98
+      CONDUCTIVITY_RAMP      = 'k_PMMA'
+      SPECIFIC_HEAT_RAMP     = 'cp_PMMA'
+      HEAT_OF_REACTION       = 5. /
+
+&MATL ID                     = 'PMMA_INT'
+      ABSORPTION_COEFFICIENT = 2870.
+      A(1)                   = 1.35E11
+      E(1)                   = 1.64E5
+      EMISSIVITY             = 0.96
+      DENSITY                = 1210.
+      SPEC_ID                = 'MMA'
+      NU_SPEC                = 0.98
+      MATL_ID                = 'PMMA_CHAR'
+      NU_MATL                = 0.02
+      CONDUCTIVITY_RAMP      = 'k_PMMA'
+      SPECIFIC_HEAT_RAMP     = 'cp_PMMA'
+      HEAT_OF_REACTION       = 817. /
+
+&MATL ID                     = 'PMMA_CHAR'
+      ABSORPTION_COEFFICIENT = 2870.
+      EMISSIVITY             = 0.96
+      DENSITY                = 1210.
+      CONDUCTIVITY_RAMP      = 'k_PMMA'
+      SPECIFIC_HEAT_RAMP     = 'cp_PMMA' /
+
+
+&RAMP ID='k_PMMA', T= 20., F=0.160 /
+&RAMP ID='k_PMMA', T=122., F=0.160 /
+&RAMP ID='k_PMMA', T=500., F=0.015 /
+
+&RAMP ID='cp_PMMA', T= 20., F=1.05 /
+&RAMP ID='cp_PMMA', T=122., F=1.90 /
+&RAMP ID='cp_PMMA', T=500., F=3.22 /
+
+
+
+***** Geometry *******************
+
+*** Specimen ***
+
+&VENT SURF_ID = 'PMMA Sample',
+      XB = -0.0026586807763582737,0.0026586807763582737, -0.0026586807763582737,0.0026586807763582737, 0.0, 0.0 /  Sample
+
+
+&OBST SURF_ID = 'ADIABATIC',
+      XB      = -0.0026586807763582737,0.0026586807763582737, -0.0026586807763582737,0.0026586807763582737, -0.0053173615527165475,0.0 /  SampleHolder
+
+
+
+***** Analysis *******************
+
+&DEVC ID='sample_temp', XYZ=0.0,0.0,0.0, IOR=3, QUANTITY='WALL TEMPERATURE' /
+
+&DEVC ID='mass_norm', XYZ=0.0,0.0,0.0, IOR=3, QUANTITY='NORMALIZED MASS' /
+
+&DEVC ID='mlr_norm', XYZ=0.0,0.0,0.0, IOR=3, QUANTITY='NORMALIZED MASS LOSS RATE' /
+
+&DEVC ID='dsc', XYZ=0.0,0.0,0.0, IOR=3, QUANTITY='NORMALIZED HEATING RATE' /
+
+&DEVC ID='mass',
+      QUANTITY='SURFACE DENSITY',
+      SURF_ID='PMMA Sample',
+      SPATIAL_STATISTIC='SURFACE INTEGRAL',
+      XB= -0.0027,0.0027, -0.0027,0.0027, -0.001, 0.001 /
+
+ DEVC ID='surface_area',
+      QUANTITY='SURFACE AREA',
+      SURF_ID='PMMA Sample',
+      SPATIAL_STATISTIC='SURFACE INTEGRAL',
+      XB= -0.0027,0.0027, -0.0027,0.0027, -0.001, 0.001 /
+
+
+
+&TAIL /
